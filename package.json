@@ -1,0 +1,21 @@
+{
+  "name": "reminder",
+  "version": "1.0.0",
+  "description": "Don't forget to do the thing",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --"
+  },
+  "author": "Kevin Liu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mysql": "^2.13.0",
+    "request": "^2.81.0",
+    "sequelize": "^3.30.4"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  }
+}
