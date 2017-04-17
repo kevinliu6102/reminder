@@ -12,6 +12,7 @@ class App extends React.Component {
     }
 
     this.submitUsername = this.submitUsername.bind(this);
+    this.addReminder = this.addReminder.bind(this);
   }
 
   submitUsername(event) {
@@ -23,13 +24,22 @@ class App extends React.Component {
     console.log('username set')
   }
 
+  addReminder(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({
+      reminders: this.state.reminders.concat(event.target.children[0].value)
+    });
+    console.log('reminder added')
+  }
+
   render() {
     return (
       <div className="container">
         {
           (this.state.username === null)
             ? <NamePicker submitUsername={this.submitUsername} />
-            : <ReminderList reminders={this.state.reminders} />
+            : <ReminderList reminders={this.state.reminders} addReminder={this.addReminder} />
         }
       </div>
     );

@@ -9566,6 +9566,7 @@ var App = function (_React$Component) {
     };
 
     _this.submitUsername = _this.submitUsername.bind(_this);
+    _this.addReminder = _this.addReminder.bind(_this);
     return _this;
   }
 
@@ -9580,12 +9581,22 @@ var App = function (_React$Component) {
       console.log('username set');
     }
   }, {
+    key: 'addReminder',
+    value: function addReminder(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.setState({
+        reminders: this.state.reminders.concat(event.target.children[0].value)
+      });
+      console.log('reminder added');
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         { className: 'container' },
-        this.state.username === null ? _react2.default.createElement(_NamePicker2.default, { submitUsername: this.submitUsername }) : _react2.default.createElement(_ReminderList2.default, { reminders: this.state.reminders })
+        this.state.username === null ? _react2.default.createElement(_NamePicker2.default, { submitUsername: this.submitUsername }) : _react2.default.createElement(_ReminderList2.default, { reminders: this.state.reminders, addReminder: this.addReminder })
       );
     }
   }]);
@@ -22082,6 +22093,10 @@ var _react = __webpack_require__(81);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _ReminderAdder = __webpack_require__(185);
+
+var _ReminderAdder2 = _interopRequireDefault(_ReminderAdder);
+
 var _ReminderItem = __webpack_require__(184);
 
 var _ReminderItem2 = _interopRequireDefault(_ReminderItem);
@@ -22092,6 +22107,7 @@ var ReminderList = function ReminderList(props) {
   return _react2.default.createElement(
     'ul',
     null,
+    _react2.default.createElement(_ReminderAdder2.default, { addReminder: props.addReminder }),
     props.reminders.map(function (reminder, i) {
       return _react2.default.createElement(_ReminderItem2.default, { reminder: reminder, index: i });
     })
@@ -22123,6 +22139,29 @@ var ReminderItem = function ReminderItem(props) {
 };
 
 module.exports = ReminderItem;
+
+/***/ }),
+/* 185 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _react = __webpack_require__(81);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ReminderAdder = function ReminderAdder(props) {
+  return _react2.default.createElement(
+    "form",
+    { onSubmit: props.addReminder },
+    _react2.default.createElement("input", { type: "text", placeholder: "Add a reminder" })
+  );
+};
+
+module.exports = ReminderAdder;
 
 /***/ })
 /******/ ]);
