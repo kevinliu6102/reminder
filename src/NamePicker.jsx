@@ -6,6 +6,6 @@ const NamePicker = (props) => {
         <input type="text" placeholder="Enter your username"/>
       </form>
     );
-}
+};
 
 module.exports = NamePicker;

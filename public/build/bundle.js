@@ -9540,6 +9540,10 @@ var _NamePicker = __webpack_require__(182);
 
 var _NamePicker2 = _interopRequireDefault(_NamePicker);
 
+var _ReminderList = __webpack_require__(183);
+
+var _ReminderList2 = _interopRequireDefault(_ReminderList);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9557,7 +9561,8 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = {
-      username: null
+      username: null,
+      reminders: ['close garage', 'lock doors', 'pack up']
     };
 
     _this.submitUsername = _this.submitUsername.bind(_this);
@@ -9580,11 +9585,7 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'container' },
-        this.state.username === null ? _react2.default.createElement(_NamePicker2.default, { submitUsername: this.submitUsername }) : _react2.default.createElement(
-          'div',
-          null,
-          'Hi'
-        )
+        this.state.username === null ? _react2.default.createElement(_NamePicker2.default, { submitUsername: this.submitUsername }) : _react2.default.createElement(_ReminderList2.default, { reminders: this.state.reminders })
       );
     }
   }]);
@@ -22069,6 +22070,59 @@ var NamePicker = function NamePicker(props) {
 };
 
 module.exports = NamePicker;
+
+/***/ }),
+/* 183 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _react = __webpack_require__(81);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ReminderItem = __webpack_require__(184);
+
+var _ReminderItem2 = _interopRequireDefault(_ReminderItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ReminderList = function ReminderList(props) {
+  return _react2.default.createElement(
+    'ul',
+    null,
+    props.reminders.map(function (reminder, i) {
+      return _react2.default.createElement(_ReminderItem2.default, { reminder: reminder, index: i });
+    })
+  );
+};
+
+module.exports = ReminderList;
+
+/***/ }),
+/* 184 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _react = __webpack_require__(81);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ReminderItem = function ReminderItem(props) {
+  return _react2.default.createElement(
+    'label',
+    { htmlFor: 'rem' + props.index },
+    _react2.default.createElement('input', { id: 'rem' + props.index, type: 'checkbox' }),
+    props.reminder
+  );
+};
+
+module.exports = ReminderItem;
 
 /***/ })
 /******/ ]);

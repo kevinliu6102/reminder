@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import NamePicker from './NamePicker.jsx';
-
+import ReminderList from './ReminderList.jsx';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      username: null
+      username: null,
+      reminders: ['close garage', 'lock doors', 'pack up']
     }
 
     this.submitUsername = this.submitUsername.bind(this);
@@ -28,7 +29,7 @@ class App extends React.Component {
         {
           (this.state.username === null)
             ? <NamePicker submitUsername={this.submitUsername} />
-            : <div>Hi</div>
+            : <ReminderList reminders={this.state.reminders} />
         }
       </div>
     );
