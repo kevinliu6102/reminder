@@ -4,18 +4,30 @@
   "description": "Don't forget to do the thing",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --"
+    "start": "node server/server.js",
+    "test": "mocha --",
+    "offline": "webpack-dev-server"
   },
   "author": "Kevin Liu",
   "license": "ISC",
   "dependencies": {
     "express": "^4.15.2",
     "mysql": "^2.13.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
     "request": "^2.81.0",
     "sequelize": "^3.30.4"
   },
   "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "chai": "^3.5.0",
-    "mocha": "^3.2.0"
+    "jshint": "^2.9.4",
+    "jshint-loader": "^0.8.4",
+    "mocha": "^3.2.0",
+    "node-libs-browser": "^2.0.0",
+    "webpack": "^2.4.1"
   }
 }
