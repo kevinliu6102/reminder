@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import NamePicker from './NamePicker.jsx';
 import ReminderList from './ReminderList.jsx';
 
+// TODO: import axios to make requests to server endpoints
+
 class App extends React.Component {
   constructor() {
     super();
@@ -18,8 +20,9 @@ class App extends React.Component {
   submitUsername(event) {
     event.preventDefault();
     event.stopPropagation();
+    let username = event.target.children[0].value;
     this.setState({
-      username: event.target.children[0].value
+      username: username
     });
     console.log('username set')
   }

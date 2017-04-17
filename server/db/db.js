@@ -25,8 +25,8 @@ User = connection.define('user', {
 Reminder.belongsTo(User);
 User.hasMany(Reminder);
 
-User.sync()
-Reminder.sync()
+User.sync();
+Reminder.sync();
 
 module.exports = {
   User: User,
