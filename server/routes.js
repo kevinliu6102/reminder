@@ -1,11 +1,8 @@
 let router = require('express').Router();
+let controllers = require('./controllers/controllers');
 
-router.get('/fetch', function(req, res) {
-  // pull username from req and query db for associated reminders
-});
+router.get('/fetch', controllers.fetch);
 
-router.post('/newrem', function(req, res) {
-  // pull new reminder text and username from req and insert into tables
-});
+router.post('/newrem', controllers.post);
 
 module.exports = router;

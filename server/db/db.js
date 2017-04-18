@@ -19,11 +19,15 @@ User = connection.define('user', {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 });
 
-Reminder.belongsTo(User);
 User.hasMany(Reminder);
+Reminder.belongsTo(User);
 
 User.sync();
 Reminder.sync();
