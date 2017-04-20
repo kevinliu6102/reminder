@@ -1,8 +1,9 @@
 exports.verifyUserSession = (req, res, next) => {
   if (['/login', '/signup'].includes(req.originalUrl) || req.session.user) {
+    console.log('go ahead')
     next();
   } else {
-    // console.log('redirecting', req.session)
+    console.log('not logged in, redirecting')
     res.redirect('/login');
   }
 };
@@ -12,5 +13,5 @@ exports.startSession = (req, res, dataVal) => {
     name: dataVal.username,
     id: dataVal.id
   };
-  res.redirect('/');
+  res.send(dataVal.username);
 };

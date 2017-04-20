@@ -36,9 +36,13 @@ exports.login = (username, password, cb) => {
     }
   })
   .then((result) => {
-    bcrypt.compare(password, result.dataValues.password, (err, match) => {
-      cb(match, result);
-    })
+    if (result) {
+      bcrypt.compare(password, result.dataValues.password, (err, match) => {
+        cb(match, result);
+      });
+    } else {
+      cb(false);
+    }
   });
 };
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = require('./routes');
 const bodyParser = require('body-parser');
+const path = require('path');
 const session = require('express-session');
 const db = require('./db/dbHelpers');
 const utils = require('./utils');
@@ -10,10 +11,10 @@ const port = 1337;
 
 // serve static files from public
 app.use(session({secret: 'secret'}));
+// app.use(utils.verifyUserSession);  
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use(utils.verifyUserSession);  
 app.use('/db', router);
 
 app.post('/login', (req, res) => {
@@ -25,8 +26,7 @@ app.post('/login', (req, res) => {
       console.log('logged in');
       utils.startSession(req, res, data.dataValues);
     } else {
-      console.log('invalid credentials');
-      res.redirect('/');
+      res.redirect(401, '/');
     }
   });
 });
@@ -40,5 +40,11 @@ app.post('/signup', (req, res) => {
     utils.startSession(req, res, data.dataValues);
   });
 });
+
+app.get('*', (req, res) => {
+  let filepath = path.join(__dirname, '../public/index.html');
+  console.log('wildcard')
+  res.sendFile(filepath);
+}); 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

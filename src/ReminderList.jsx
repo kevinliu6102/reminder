@@ -11,4 +11,4 @@ const ReminderList = (props) => {
   );
 };
 
-module.exports = ReminderList;
+export default ReminderList;

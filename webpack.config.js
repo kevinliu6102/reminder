@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './src/app.jsx',
+  entry: './src/index.jsx',
   output: {
     path: __dirname + '/public/build/',
     filename: 'bundle.js'
@@ -23,5 +23,6 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js']
-  }
+  },
+  devtool: 'source-map'
 }

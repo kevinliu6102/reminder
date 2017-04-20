@@ -9,4 +9,4 @@ const ReminderItem = (props) => {
   );
 };
 
-module.exports = ReminderItem;
+export default ReminderItem;
