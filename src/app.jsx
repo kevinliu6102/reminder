@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 // import { Router, Route, IndexRoute } from 'react-router';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import history from 'history';
 import Homepage from './Homepage.jsx';
 import LoginForm from './LoginForm.jsx';
 import SignupForm from './SignupForm.jsx';
@@ -14,22 +15,13 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      username: null,
-      reminders: ['close garage', 'lock doors', 'pack up']
+      username: null
     };
 
-    this.addReminder = this.addReminder.bind(this);
+    console.log('history', history)
+
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
-  }
-
-  addReminder(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.setState({
-      reminders: this.state.reminders.concat(event.target.children[0].value)
-    });
-    console.log('reminder added')
   }
 
   login(event) {
@@ -49,25 +41,47 @@ class App extends React.Component {
   }
 
   signup(event) {
-
+    console.log('signing up')
+    event.preventDefault();
+    event.stopPropagation();
+    axios.post('/signup', {
+      username: event.target.children[0].value,
+      password: event.target.children[1].value
+    })
+    .then((res) => {
+      this.setState({
+        username: res.data
+      });
+    })
+    .catch((e) => console.log('login error', e));
   }
 
   render() {
+    console.log(this.state.username)
     return (
       <Router>
         <Switch>
-          <Route exact path='/'>
+          <Route exact path="/">
             <Homepage username={this.state.username}/>
           </Route>
-          <Route exact path='/login'>
-            <LoginForm login={this.login}/>
-          </Route>
-          <Route exact path='/signup'>
-            <SignupForm signup={this.signup}/>
-          </Route>
-          <Route exact path='/reminders'>
-            <ReminderList reminders={this.state.reminders} addReminder={this.addReminder}/>
-          </Route>
+          {
+            (this.state.username)
+            ? <Switch>
+                <Route exact path="/reminders">
+                  <ReminderList />
+                </Route>
+                <Redirect from="/login" to="/reminders" />
+                <Redirect from="/signup" to="/reminders" />
+              </Switch>
+            : <Switch>
+                <Route exact path="/login">
+                  <LoginForm username={this.state.username} login={this.login}/>
+                </Route>
+                <Route exact path="/signup">
+                  <SignupForm signup={this.signup}/>
+                </Route>
+              </Switch>
+          }
         </Switch>
       </Router>
     );
