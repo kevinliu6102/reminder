@@ -9,9 +9,7 @@ const app = express();
 
 const port = 1337;
 
-// serve static files from public
 app.use(session({secret: 'secret'}));
-// app.use(utils.verifyUserSession);  
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());

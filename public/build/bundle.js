@@ -12469,27 +12469,19 @@ var _axios = __webpack_require__(106);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _ReminderSwitch = __webpack_require__(260);
+
+var _ReminderSwitch2 = _interopRequireDefault(_ReminderSwitch);
+
+var _LoginSignSwitch = __webpack_require__(261);
+
+var _LoginSignSwitch2 = _interopRequireDefault(_LoginSignSwitch);
+
 var _reactRouterDom = __webpack_require__(234);
-
-var _history = __webpack_require__(148);
-
-var _history2 = _interopRequireDefault(_history);
 
 var _Homepage = __webpack_require__(124);
 
 var _Homepage2 = _interopRequireDefault(_Homepage);
-
-var _LoginForm = __webpack_require__(125);
-
-var _LoginForm2 = _interopRequireDefault(_LoginForm);
-
-var _SignupForm = __webpack_require__(129);
-
-var _SignupForm2 = _interopRequireDefault(_SignupForm);
-
-var _ReminderList = __webpack_require__(128);
-
-var _ReminderList2 = _interopRequireDefault(_ReminderList);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12498,8 +12490,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import { Router, Route, IndexRoute } from 'react-router';
-
 
 // TODO: import axios to make requests to server endpoints
 
@@ -12514,8 +12504,6 @@ var App = function (_React$Component) {
     _this.state = {
       username: null
     };
-
-    console.log('history', _history2.default);
 
     _this.login = _this.login.bind(_this);
     _this.signup = _this.signup.bind(_this);
@@ -12575,30 +12563,7 @@ var App = function (_React$Component) {
             { exact: true, path: '/' },
             _react2.default.createElement(_Homepage2.default, { username: this.state.username })
           ),
-          this.state.username ? _react2.default.createElement(
-            _reactRouterDom.Switch,
-            null,
-            _react2.default.createElement(
-              _reactRouterDom.Route,
-              { exact: true, path: '/reminders' },
-              _react2.default.createElement(_ReminderList2.default, null)
-            ),
-            _react2.default.createElement(_reactRouterDom.Redirect, { from: '/login', to: '/reminders' }),
-            _react2.default.createElement(_reactRouterDom.Redirect, { from: '/signup', to: '/reminders' })
-          ) : _react2.default.createElement(
-            _reactRouterDom.Switch,
-            null,
-            _react2.default.createElement(
-              _reactRouterDom.Route,
-              { exact: true, path: '/login' },
-              _react2.default.createElement(_LoginForm2.default, { username: this.state.username, login: this.login })
-            ),
-            _react2.default.createElement(
-              _reactRouterDom.Route,
-              { exact: true, path: '/signup' },
-              _react2.default.createElement(_SignupForm2.default, { signup: this.signup })
-            )
-          )
+          this.state.username ? _react2.default.createElement(_ReminderSwitch2.default, { username: this.state.username }) : _react2.default.createElement(_LoginSignSwitch2.default, { username: this.state.username, login: this.login, signup: this.signup })
         )
       );
     }
@@ -13629,6 +13594,10 @@ var _ReminderItem = __webpack_require__(127);
 
 var _ReminderItem2 = _interopRequireDefault(_ReminderItem);
 
+var _axios = __webpack_require__(106);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13640,10 +13609,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ReminderList = function (_React$Component) {
   _inherits(ReminderList, _React$Component);
 
-  function ReminderList() {
+  function ReminderList(props) {
     _classCallCheck(this, ReminderList);
 
-    var _this = _possibleConstructorReturn(this, (ReminderList.__proto__ || Object.getPrototypeOf(ReminderList)).call(this));
+    var _this = _possibleConstructorReturn(this, (ReminderList.__proto__ || Object.getPrototypeOf(ReminderList)).call(this, props));
 
     _this.state = {
       reminders: ['close garage', 'lock doors', 'pack up']
@@ -13654,6 +13623,19 @@ var ReminderList = function (_React$Component) {
   }
 
   _createClass(ReminderList, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _axios2.default.get('/fetch', {
+        params: {
+          username: props.username
+        }
+      }).then(function (res) {
+        return console.log(res);
+      }).catch(function (e) {
+        return console.log('error fetching reminders', e);
+      });
+    }
+  }, {
     key: 'addReminder',
     value: function addReminder(event) {
       event.preventDefault();
@@ -16416,64 +16398,7 @@ if (performance.now) {
 module.exports = performanceNow;
 
 /***/ }),
-/* 148 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.createPath = exports.parsePath = exports.locationsAreEqual = exports.createLocation = exports.createMemoryHistory = exports.createHashHistory = exports.createBrowserHistory = undefined;
-
-var _LocationUtils = __webpack_require__(31);
-
-Object.defineProperty(exports, 'createLocation', {
-  enumerable: true,
-  get: function get() {
-    return _LocationUtils.createLocation;
-  }
-});
-Object.defineProperty(exports, 'locationsAreEqual', {
-  enumerable: true,
-  get: function get() {
-    return _LocationUtils.locationsAreEqual;
-  }
-});
-
-var _PathUtils = __webpack_require__(22);
-
-Object.defineProperty(exports, 'parsePath', {
-  enumerable: true,
-  get: function get() {
-    return _PathUtils.parsePath;
-  }
-});
-Object.defineProperty(exports, 'createPath', {
-  enumerable: true,
-  get: function get() {
-    return _PathUtils.createPath;
-  }
-});
-
-var _createBrowserHistory2 = __webpack_require__(72);
-
-var _createBrowserHistory3 = _interopRequireDefault(_createBrowserHistory2);
-
-var _createHashHistory2 = __webpack_require__(73);
-
-var _createHashHistory3 = _interopRequireDefault(_createHashHistory2);
-
-var _createMemoryHistory2 = __webpack_require__(74);
-
-var _createMemoryHistory3 = _interopRequireDefault(_createMemoryHistory2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.createBrowserHistory = _createBrowserHistory3.default;
-exports.createHashHistory = _createHashHistory3.default;
-exports.createMemoryHistory = _createMemoryHistory3.default;
-
-/***/ }),
+/* 148 */,
 /* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29377,6 +29302,91 @@ try {
 
 module.exports = g;
 
+
+/***/ }),
+/* 260 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ReminderList = __webpack_require__(128);
+
+var _ReminderList2 = _interopRequireDefault(_ReminderList);
+
+var _reactRouterDom = __webpack_require__(234);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ReminderSwitch = function ReminderSwitch(props) {
+  return _react2.default.createElement(
+    _reactRouterDom.Switch,
+    null,
+    _react2.default.createElement(
+      _reactRouterDom.Route,
+      { exact: true, path: '/reminders' },
+      _react2.default.createElement(_ReminderList2.default, { username: props.username })
+    ),
+    _react2.default.createElement(_reactRouterDom.Redirect, { from: '/login', to: '/reminders' }),
+    _react2.default.createElement(_reactRouterDom.Redirect, { from: '/signup', to: '/reminders' })
+  );
+};
+
+exports.default = ReminderSwitch;
+
+/***/ }),
+/* 261 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _LoginForm = __webpack_require__(125);
+
+var _LoginForm2 = _interopRequireDefault(_LoginForm);
+
+var _SignupForm = __webpack_require__(129);
+
+var _SignupForm2 = _interopRequireDefault(_SignupForm);
+
+var _reactRouterDom = __webpack_require__(234);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ReminderSwitch = function ReminderSwitch(props) {
+  return _react2.default.createElement(
+    _reactRouterDom.Switch,
+    null,
+    _react2.default.createElement(
+      _reactRouterDom.Route,
+      { exact: true, path: '/login' },
+      _react2.default.createElement(_LoginForm2.default, { username: props.username, login: props.login })
+    ),
+    _react2.default.createElement(
+      _reactRouterDom.Route,
+      { exact: true, path: '/signup' },
+      _react2.default.createElement(_SignupForm2.default, { signup: props.signup })
+    )
+  );
+};
+
+exports.default = ReminderSwitch;
 
 /***/ })
 /******/ ]);

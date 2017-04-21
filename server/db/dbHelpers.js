@@ -1,7 +1,7 @@
 let { User, Reminder } = require('./db');
 const bcrypt = require('bcrypt-nodejs');
 
-exports.retrieveReminders = function (username) {
+exports.retrieveReminders = (username, cb) => {
   return User.find({
       where: {
         username: username
@@ -10,9 +10,6 @@ exports.retrieveReminders = function (username) {
     .then(function (data) {
       let userId = data[0].dataValues.id
       return Reminder.findAll({
-        where: {
-          text: 'Teehee'
-        },
         include: {
           model: User,
           where: {
@@ -27,6 +24,10 @@ exports.retrieveReminders = function (username) {
     .catch(function (e) {
       console.log('error fetching reminders', e.message);
     });
+};
+
+exports.createReminder = (username, reminder) => {
+
 };
 
 exports.login = (username, password, cb) => {
