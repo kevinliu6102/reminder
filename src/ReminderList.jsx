@@ -14,21 +14,39 @@ class ReminderList extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/fetch', {
+    console.log('fetching reminders')
+    axios.get('/db/fetch', {
       params: {
-        username: props.username
+        username: this.props.username
       }
     })
-         .then((res) => console.log(res))
+         .then((res) => {
+           let reminders = res.data.map((e) => {
+             return [e.text, e.done];
+           });
+           this.setState({
+             reminders: reminders
+           });
+         })
          .catch((e) => console.log('error fetching reminders', e));
   }
 
   addReminder(event) {
     event.preventDefault();
     event.stopPropagation();
-    this.setState({
-      reminders: this.state.reminders.concat(event.target.children[0].value)
-    });
+    let app = this;
+    let text = event.target.children[0].value
+    axios.post('/db/newrem', {
+      username: this.props.username,
+      text: text
+    })
+         .then((res) => {
+           console.log('newrem response', res)
+           app.setState({
+             reminders: this.state.reminders.concat([text, false])
+           });
+        })
+         .catch((e) => console.log('newrem error', e));
     console.log('reminder added')
   }
 

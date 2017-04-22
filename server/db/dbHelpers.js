@@ -8,26 +8,42 @@ exports.retrieveReminders = (username, cb) => {
       }
     })
     .then(function (data) {
-      let userId = data[0].dataValues.id
+      let userId = data.dataValues.id
       return Reminder.findAll({
-        include: {
-          model: User,
-          where: {
-            id: userId
-          }
+        where: {
+          userId: userId
         }
       });
     })
-    // .then(function (data) {
-    //   console.log(data);
-    // })
+    .then(function (data) {
+      cb(data);
+    })
     .catch(function (e) {
       console.log('error fetching reminders', e.message);
     });
 };
 
-exports.createReminder = (username, reminder) => {
-
+exports.createReminder = (username, text, cb) => {
+  return User.find({
+      where: {
+        username: username
+      }
+    })
+    .then(function (data) {
+      let userId = data.dataValues.id
+      return Reminder.create({
+        text: text,
+        done: false,
+        userId: userId
+      });
+    })
+    .then(function (data) {
+      console.log('reminder created', data);
+      cb();
+    })
+    .catch(function (e) {
+      console.log('error creating reminder', e.message);
+    });
 };
 
 exports.login = (username, password, cb) => {
